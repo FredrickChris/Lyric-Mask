@@ -1,71 +1,419 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Rico Blanco - Your Universe</title>
-        <link rel="stylesheet" href="stylesheets.css">
-    </head>
-    <body>
-        <div class="image-container">
-            <div class="cutout-bg"></div>
-            <h1 class="cutout">
-                Tell me something
-                When the rain falls on my face
-                How do you quickly replace it
-                With a golden summer smile?
-                Tell me something
-                When I'm feelin' tired and afraid
-                How do you know just what to say
-                To make everything alright?
-                I don't think that you even realize
-                The joy you make me feel when I'm inside your universe
-                You hold me like I'm the one who's precious
-                I hate to break it to you, but it's just the other way around
-                You can thank your stars all you want
-                But I'll always be the lucky one
-                Tell me something
-                When I'm 'bout to lose control
-                How do you patiently hold my hand
-                And gently calm me down?
-                Tell me something
-                When you sing and when you laugh
-                Why do I always photograph
-                My heart flying way above the clouds?
-                I don't think that you even realize
-                The joy you make me feel when I'm inside your universe
-                You hold me like I'm the one who's precious
-                I hate to break it to you, but it's just the other way around
-                You can thank your stars all you want
-                But I'll always be the lucky one
-                Whoa, ooh
-                Whoa, ooh
-                Whoa, ooh, ooh
-                I don't think that you even realize
-                The joy you make me feel when I'm inside your universe
-                You hold me like I'm the one who's precious
-                I hate to break it to you, but it's just the other way around
-                You can thank your stars all you want
-                But I'll always be the lucky one
-                You can thank your stars all you want
-                But I'll always be the lucky one
-                I'll always be the lucky one
-                I'll always be the lucky one
-            </h1>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Through Image</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --panel:#141414;
+    --panel-border:#262626;
+    --text:#ededed;
+    --muted:#8a8a8a;
+    --accent:#d9a441;
+    --accent-dark:#a87c2e;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    min-height:100vh;
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    padding:48px 24px 80px;
+  }
+  .eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.18em;
+    color:var(--accent);
+    text-transform:uppercase;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:900;
+    font-size:clamp(32px,5vw,52px);
+    line-height:1.05;
+    margin:10px 0 12px;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:16px;
+    max-width:560px;
+    line-height:1.5;
+    margin:0 0 40px;
+  }
+  .layout{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:28px;
+    align-items:start;
+  }
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr;}
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:16px;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .field{display:flex;flex-direction:column;gap:10px;}
+  .field-row{display:flex;justify-content:space-between;align-items:baseline;}
+  label{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    letter-spacing:0.02em;
+  }
+  .size-value{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;
+    color:var(--accent);
+  }
+  .dropzone{
+    border:1.5px dashed var(--panel-border);
+    border-radius:12px;
+    padding:22px 16px;
+    text-align:center;
+    font-size:13px;
+    color:var(--muted);
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .dropzone:hover, .dropzone.drag{
+    border-color:var(--accent);
+    color:var(--text);
+    background:rgba(217,164,65,0.06);
+  }
+  .file-name{
+    display:block;
+    margin-top:6px;
+    font-size:12px;
+    color:var(--accent);
+  }
+  textarea{
+    resize:vertical;
+    min-height:64px;
+    background:#0d0d0d;
+    border:1px solid var(--panel-border);
+    border-radius:10px;
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:12px;
+    line-height:1.4;
+  }
+  textarea:focus-visible, input:focus-visible, button:focus-visible, .dropzone:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+  input[type="range"]{
+    width:100%;
+    -webkit-appearance:none;
+    appearance:none;
+    height:4px;
+    background:var(--panel-border);
+    border-radius:4px;
+    outline:none;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:16px;height:16px;border-radius:50%;
+    background:var(--accent);
+    cursor:pointer;
+    border:none;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--accent);
+    cursor:pointer;
+    border:none;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#161106;
+    border:none;
+    border-radius:10px;
+    padding:13px 16px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    transition:background .15s ease, opacity .15s ease;
+  }
+  .btn-primary:hover:not(:disabled){background:var(--accent-dark);}
+  .btn-primary:disabled{
+    opacity:0.4;
+    cursor:not-allowed;
+  }
+  .hint{
+    font-size:12.5px;
+    color:var(--muted);
+    margin:0;
+    line-height:1.4;
+  }
+  .preview-wrap{min-height:420px;}
+  .canvas-frame{
+    position:relative;
+    border:1px solid var(--panel-border);
+    border-radius:16px;
+    background:#000;
+    min-height:420px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  canvas{
+    display:none;
+    max-width:100%;
+    height:auto;
+  }
+  .empty-state{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    color:var(--muted);
+    text-align:center;
+    padding:40px;
+  }
+  .empty-state span:first-child{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--text);
+  }
+  .empty-sub{font-size:13px;}
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <span class="eyebrow">Cutout Type Generator</span>
+  <h1>Text Through Image</h1>
+  <p class="sub">Upload a photo, type your words, pick a size. The letters become a window into the picture, everything else turns black, and you get a real PNG back.</p>
+
+  <div class="layout">
+    <section class="panel" aria-label="Controls">
+      <div class="field">
+        <label for="imageInput">Image</label>
+        <label class="dropzone" id="dropzone" for="imageInput" tabindex="0">
+          <span id="dropzoneText">Click to upload, or drag a photo here</span>
+          <span class="file-name" id="fileName"></span>
+        </label>
+        <input type="file" id="imageInput" accept="image/*" hidden>
+      </div>
+
+      <div class="field">
+        <label for="textInput">Text</label>
+        <textarea id="textInput" rows="3" placeholder="Type the words that will fill the frame..."></textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-row">
+          <label for="sizeInput">Text size</label>
+          <span class="size-value" id="sizeValue">90px</span>
         </div>
-        <script>
-            function fillCutoutText() {
-                const el = document.querySelector('.cutout');
-                const container = document.querySelector('.image-container');
-                const original = el.textContent.trim();
+        <input type="range" id="sizeInput" min="4" max="150" value="90">
+      </div>
 
-                el.textContent = original; // reset before refilling (handles resize)
+      <button id="downloadBtn" class="btn-primary" disabled>Download PNG</button>
+      <p class="hint" id="hint">Upload an image to get started.</p>
+    </section>
 
-                while (el.scrollHeight < container.clientHeight + 200) {
-                el.textContent += ' ' + original;
-                }
-            }
-            fillCutoutText();
-            window.addEventListener('resize', fillCutoutText);
-        </script>
-    </body>
+    <section class="preview-wrap" aria-label="Preview">
+      <div class="canvas-frame" id="canvasFrame">
+        <canvas id="renderCanvas"></canvas>
+        <div class="empty-state" id="emptyState">
+          <span>No image yet</span>
+          <span class="empty-sub">Your cutout preview renders here</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  const dropzone = document.getElementById('dropzone');
+  const imageInput = document.getElementById('imageInput');
+  const fileName = document.getElementById('fileName');
+  const textInput = document.getElementById('textInput');
+  const sizeInput = document.getElementById('sizeInput');
+  const sizeValue = document.getElementById('sizeValue');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const hint = document.getElementById('hint');
+  const canvas = document.getElementById('renderCanvas');
+  const emptyState = document.getElementById('emptyState');
+  const ctx = canvas.getContext('2d');
+
+  const MAX_DIM = 1600;
+  let img = null;
+  let rafPending = false;
+
+  function loadImageFile(file){
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const temp = new Image();
+      temp.onload = () => {
+        img = temp;
+        setupCanvasDimensions();
+        emptyState.style.display = 'none';
+        canvas.style.display = 'block';
+        downloadBtn.disabled = false;
+        hint.textContent = 'Looking good. Adjust the text and size, then download.';
+        fileName.textContent = file.name;
+        scheduleRender();
+      };
+      temp.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function setupCanvasDimensions(){
+    let w = img.naturalWidth, h = img.naturalHeight;
+    const longest = Math.max(w, h);
+    if (longest > MAX_DIM){
+      const scale = MAX_DIM / longest;
+      w = Math.round(w * scale);
+      h = Math.round(h * scale);
+    }
+    canvas.width = w;
+    canvas.height = h;
+  }
+
+  function wrapLines(measureCtx, text, maxWidth){
+    const words = text.split(/\s+/).filter(Boolean);
+    if (!words.length) return [];
+    const lines = [];
+    let current = words[0];
+    for (let i = 1; i < words.length; i++){
+      const test = current + ' ' + words[i];
+      if (measureCtx.measureText(test).width <= maxWidth){
+        current = test;
+      } else {
+        lines.push(current);
+        current = words[i];
+      }
+    }
+    lines.push(current);
+    return lines;
+  }
+
+  function buildRepeatedLines(measureCtx, text, maxWidth, maxLines){
+    const baseLines = wrapLines(measureCtx, text, maxWidth);
+    if (!baseLines.length) return [];
+    const lines = [];
+    let i = 0;
+    while (lines.length < maxLines){
+      lines.push(baseLines[i % baseLines.length]);
+      i++;
+    }
+    return lines;
+  }
+
+  function render(){
+    if (!img) return;
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // 1. Solid black base
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+
+    // 2. Punch text-shaped holes out of the black layer
+    const fontSize = parseInt(sizeInput.value, 10);
+    const lineHeight = Math.round(fontSize * 0.92);
+    ctx.font = `900 ${fontSize}px "Space Grotesk", sans-serif`;
+    ctx.textBaseline = 'top';
+
+    const maxWidth = w * 0.94;
+    const xPad = w * 0.03;
+    const maxLines = Math.ceil(h / lineHeight) + 1;
+    const rawText = (textInput.value || '').trim() || 'Your text here';
+    const lines = buildRepeatedLines(ctx, rawText, maxWidth, maxLines);
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = '#fff';
+    let y = 0;
+    for (const line of lines){
+      if (y > h) break;
+      ctx.fillText(line, xPad, y);
+      y += lineHeight;
+    }
+
+    // 3. Drop the image in behind, it only shows through the holes
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.drawImage(img, 0, 0, w, h);
+
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function scheduleRender(){
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      rafPending = false;
+      render();
+    });
+  }
+
+  imageInput.addEventListener('change', (e) => loadImageFile(e.target.files[0]));
+
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('drag');
+  });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('drag');
+    loadImageFile(e.dataTransfer.files[0]);
+  });
+  dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      imageInput.click();
+    }
+  });
+
+  textInput.addEventListener('input', scheduleRender);
+  sizeInput.addEventListener('input', () => {
+    sizeValue.textContent = sizeInput.value + 'px';
+    scheduleRender();
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    canvas.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'text-through-image.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+  });
+
+  document.fonts.ready.then(scheduleRender).catch(() => {});
+</script>
+</body>
 </html>
