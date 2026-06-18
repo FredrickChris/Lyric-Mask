@@ -4,7 +4,7 @@ Lyric Mask overlays song lyrics as a text mask, revealing a portrait through the
 # How to Use
 1. Replace/Upload image in images folder
 2. Change .image-container background URL path to ../images/[image-name]
-3. Change lyrics inside the HTML file and repeat it as many times as needed to fill screen (might take some trial and error)
+3. Change lyrics inside the HTML file
 4. Change title inside the HTML file to whatever you want
 
 # Dev-Log
@@ -14,7 +14,6 @@ Lyric Mask overlays song lyrics as a text mask, revealing a portrait through the
 - Title
 
 **Future Plans**
- - Automate Lyric looping
  - Automate Image background
  - Create an actual frontend that will recieve images and song title/lyrics
    - Allow image uploads
