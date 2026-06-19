@@ -252,6 +252,15 @@
       </div>
 
       <div class="field">
+        <label for="alignSelect">Alignment</label>
+        <select id="alignSelect">
+          <option value="left" selected>Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+
+      <div class="field">
         <div class="field-row">
           <label for="sizeInput">Text size</label>
           <span class="size-value" id="sizeValue">90px</span>
@@ -281,6 +290,7 @@
   const fileName = document.getElementById('fileName');
   const textInput = document.getElementById('textInput');
   const fontSelect = document.getElementById('fontSelect');
+  const alignSelect = document.getElementById('alignSelect');
   const sizeInput = document.getElementById('sizeInput');
   const sizeValue = document.getElementById('sizeValue');
   const downloadBtn = document.getElementById('downloadBtn');
@@ -381,10 +391,17 @@
 
     ctx.globalCompositeOperation = 'destination-out';
     ctx.fillStyle = '#fff';
+
+    const align = alignSelect.value;
+    ctx.textAlign = align;
+    let xPos = xPad;
+    if (align === 'center') xPos = w / 2;
+    else if (align === 'right') xPos = w - xPad;
+
     let y = 0;
     for (const line of lines){
       if (y > h) break;
-      ctx.fillText(line, xPad, y);
+      ctx.fillText(line, xPos, y);
       y += lineHeight;
     }
 
@@ -432,6 +449,7 @@
   }
 
   textInput.addEventListener('input', scheduleRender);
+  alignSelect.addEventListener('change', scheduleRender);
   fontSelect.addEventListener('change', () => {
     loadSelectedFont().then(scheduleRender);
   });
