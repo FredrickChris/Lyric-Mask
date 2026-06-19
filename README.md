@@ -1,5 +1,5 @@
 # Text Through Image
-Text Through Image overlays song lyrics as a text mask, revealing a portrait through the letters themselves. The image remains intact behind the text, creating a striking blend of typography and photography where the artist appears to emerge from their own words.
+Text Through Image overlays any text as a mask, revealing a portrait through the letters themselves. The image remains intact behind the text, creating a striking blend of typography and photography where the painting appears to emerge from words.
 
 # How to Use
 1. Upload Your image
